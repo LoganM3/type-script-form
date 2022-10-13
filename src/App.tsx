@@ -51,12 +51,29 @@ const App: React.FC = () => {
         ]
       })
 
-      console.log(userState)
-
+    }
+    
+    const deleteHandler = (index: number): void => {
+      const filterUsers = userState.allUsers.filter((user, i) =>{
+        return index !== i
+      } )
+      setUserState({
+        ...userState,
+        allUsers: filterUsers
+      })
     }
 
-    console.log(userState.currentUser)
-
+    const allUsers = userState.allUsers.map((user, i) => (
+     <div key={i}>
+      <h2>{user.name}</h2>
+      <h2>{user.age}</h2>
+      <h2>{user.job}</h2>
+      <button onClick={() => deleteHandler(i)}>Delete user</button>
+      
+     </div>
+    )) 
+    
+    console.log(userState)
   return (
    <div className='container'>
     <h1>React with Typescript</h1>
@@ -89,6 +106,7 @@ const App: React.FC = () => {
 
       <button type='submit'>Add user</button>
     </form>
+    {allUsers}
    </div>
   );
 }
