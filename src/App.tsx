@@ -19,6 +19,18 @@ const App: React.FC = () => {
       }
     })
 
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) : void => {
+      // console.log(e.target.value);
+      setUserState({
+        currentUser:{
+          ...userState.currentUser,
+          [e.target.name]: e.target.value
+        }
+      })
+    }
+
+    console.log(userState.currentUser)
+
   return (
    <div className='container'>
     <h1>React with Typescript</h1>
@@ -28,22 +40,25 @@ const App: React.FC = () => {
         id="userName"
         type="text"
         name="name"
-        value=""
+        value={userState.currentUser.name}
+        onChange={onChangeHandler}
       />
       <label htmlFor="userAge">Age:</label>
       <input 
         id="userAge"
         type="number"
         name="age"
-        value=""
+        value={userState.currentUser.age}
         onChange={onChangeHandler}
+       
       /> 
       <label htmlFor="userJob">Job:</label>
       <input 
         id="userJob"
         type="text"
         name="job"
-        value=""
+        value={userState.currentUser.job}
+        onChange={onChangeHandler}
       />
 
       <button type='submit'>Add user</button>
