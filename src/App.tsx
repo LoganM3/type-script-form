@@ -6,22 +6,29 @@ import './App.css';
 const App: React.FC = () => {
 
     interface UserInt {
-      name: string,
-      age: string,
-      job: string,
+      name: string;
+      age: string;
+      job: string;
     }
-  
-    const [userState, setUserState] = useState<{currentUser: UserInt }>({
+    
+    interface allUsersInt{
+      currentUser: UserInt;
+      allUsers: Array<UserInt>;
+    }
+
+    const [userState, setUserState] = useState<allUsersInt>({
       currentUser: {
         name: "",
         age: "",
         job: ""
-      }
+      },
+      allUsers:[]
     })
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) : void => {
       // console.log(e.target.value);
       setUserState({
+        ...userState,
         currentUser:{
           ...userState.currentUser,
           [e.target.name]: e.target.value
@@ -29,12 +36,31 @@ const App: React.FC = () => {
       })
     }
 
+    const submitForm = (e: React.SyntheticEvent):void => {
+      e.preventDefault();
+      
+      setUserState({
+        currentUser:{
+          name: "",
+          age: "",
+          job: ""
+        },
+        allUsers:[
+          ...userState.allUsers,
+          userState.currentUser
+        ]
+      })
+
+      console.log(userState)
+
+    }
+
     console.log(userState.currentUser)
 
   return (
    <div className='container'>
     <h1>React with Typescript</h1>
-    <form>
+    <form onSubmit={submitForm}>
       <label htmlFor="userName">Name:</label>
       <input 
         id="userName"
